@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rashmi Sathish — B.Tech CSC Core · VIT Vellore</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Rashmi Sathish — B.Tech CSC Core, VIT Vellore. Pursuing excellence at the intersection of algorithms, computer vision, and robotics.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════
+   RESET & ROOT
+═══════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #060608; --bg2: #0c0c10; --card: #0e0e15; --card2: #131320;
+  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.04);
+  --cyan: #00f0ff; --pink: #ff2d9b; --gold: #ffd23f; --green: #39ff8f; --violet: #a259ff;
+  --text: #e8e8f0; --muted: #5c5c78;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-body: 'DM Sans', sans-serif;
+  --glow-cyan: 0 0 40px rgba(0,240,255,0.25);
+  --glow-pink: 0 0 40px rgba(255,45,155,0.25);
+  --glow-gold: 0 0 40px rgba(255,210,63,0.25);
+  --glow-green: 0 0 40px rgba(57,255,143,0.25);
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.7; overflow-x: hidden; cursor: none; }
+
+/* CURSOR */
+#cursor { width: 10px; height: 10px; background: var(--cyan); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: width .2s, height .2s, background .2s; mix-blend-mode: difference; }
+#cursor-ring { width: 32px; height: 32px; border: 1px solid rgba(0,240,255,0.4); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99998; transform: translate(-50%,-50%); transition: all .12s ease-out; }
+body:has(a:hover) #cursor, body:has(button:hover) #cursor { width: 22px; height: 22px; background: var(--pink); }
+
+/* BACKGROUND */
+#starfield { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.35; background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px); background-size: 36px 36px; }
+body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.3; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); }
+.orb { position: fixed; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; animation: orb-float 14s ease-in-out infinite alternate; }
+.orb-1 { width: 560px; height: 560px; background: rgba(0,240,255,0.035); top: -120px; right: -80px; }
+.orb-2 { width: 420px; height: 420px; background: rgba(255,45,155,0.035); bottom: 200px; left: -120px; animation-delay: -5s; }
+.orb-3 { width: 280px; height: 280px; background: rgba(162,89,255,0.025); top: 45%; left: 40%; animation-delay: -9s; }
+@keyframes orb-float { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(28px,44px) scale(1.08); } }
+
+/* LAYOUT */
+section, .stats-bar { position: relative; z-index: 2; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 3rem; }
+hr.section-div { border: none; border-top: 1px solid var(--border2); max-width: 1100px; margin: 0 auto; position: relative; z-index: 2; }
+
+/* NAV */
+.topnav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 1rem 3rem; background: rgba(6,6,8,0.6); backdrop-filter: blur(24px) saturate(1.2); border-bottom: 1px solid var(--border2); transition: all .3s; }
+.topnav.scrolled { padding: .7rem 3rem; background: rgba(6,6,8,0.92); }
+.nav-logo { font-family: var(--font-display); font-size: 1.7rem; letter-spacing: 2px; color: var(--text); text-decoration: none; }
+.nav-logo span { color: var(--cyan); }
+.nav-links { list-style: none; display: flex; gap: 1.8rem; align-items: center; }
+.nav-links a { font-family: var(--font-mono); font-size: .7rem; color: var(--muted); text-decoration: none; letter-spacing: .1em; transition: color .2s; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--cyan); transition: width .25s; }
+.nav-links a:hover { color: var(--cyan); }
+.nav-links a:hover::after { width: 100%; }
+.nav-pill { background: transparent !important; border: 1px solid var(--cyan) !important; color: var(--cyan) !important; padding: .45rem 1.1rem !important; border-radius: 2px !important; font-weight: 700 !important; transition: all .2s !important; }
+.nav-pill:hover { background: var(--cyan) !important; color: #000 !important; box-shadow: var(--glow-cyan) !important; }
+.nav-pill::after { display: none !important; }
+
+/* HERO */
+#hero { min-height: 100vh; display: flex; align-items: center; padding: 8rem 3rem 4rem; max-width: 1200px; margin: 0 auto; position: relative; }
+#hero::before { content: ''; position: absolute; right: 0; top: 20%; width: 1px; height: 40%; background: linear-gradient(to bottom, transparent, var(--cyan), transparent); opacity: 0.15; }
+.hero-wrap { display: grid; grid-template-columns: 1fr auto; gap: 5rem; align-items: center; width: 100%; }
+.hero-eyebrow { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); letter-spacing: .2em; margin-bottom: 1rem; display: flex; align-items: center; gap: .8rem; }
+.hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--cyan); flex-shrink: 0; }
+.typewriter { font-family: var(--font-mono); font-size: .85rem; color: var(--cyan); letter-spacing: .12em; margin-bottom: 1.4rem; min-height: 1.2em; }
+.typewriter::after { content: '▋'; animation: blink .7s step-end infinite; }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+.hero-name { font-family: var(--font-display); font-size: clamp(4rem,10vw,9rem); line-height: .88; letter-spacing: .02em; margin-bottom: 1.6rem; position: relative; display: inline-block; }
+.hero-name:hover { animation: glitch-name .4s steps(1,end); }
+@keyframes glitch-name {
+  0%   { text-shadow: 3px 0 var(--cyan), -3px 0 var(--pink); transform: skewX(0deg); }
+  20%  { text-shadow: -3px 0 var(--cyan), 3px 0 var(--pink); transform: skewX(-2deg); }
+  40%  { text-shadow: 3px 0 var(--pink), -3px 0 var(--cyan); transform: skewX(1deg); }
+  60%  { text-shadow: -3px 0 var(--gold), 3px 0 var(--cyan); transform: skewX(0deg); }
+  80%  { text-shadow: 3px 0 var(--cyan), -3px 0 var(--gold); transform: skewX(-1deg); }
+  100% { text-shadow: none; transform: skewX(0deg); }
+}
+.grad-text { background: linear-gradient(135deg, var(--cyan) 0%, var(--pink) 55%, var(--gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-sub { font-size: 1.05rem; color: var(--muted); max-width: 460px; margin-bottom: 2.5rem; line-height: 1.8; }
+.hero-sub strong { color: var(--text); }
+.btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-main { display: inline-flex; align-items: center; gap: .5rem; background: var(--cyan); color: #000; font-family: var(--font-mono); font-size: .78rem; font-weight: 700; letter-spacing: .06em; padding: .85rem 1.8rem; border-radius: 0; text-decoration: none; transition: all .2s; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); }
+.btn-main:hover { box-shadow: var(--glow-cyan); transform: translateY(-2px); }
+.btn-ghost { display: inline-flex; align-items: center; gap: .5rem; border: 1px solid rgba(255,255,255,0.12); color: var(--muted); font-family: var(--font-mono); font-size: .78rem; letter-spacing: .06em; padding: .85rem 1.8rem; border-radius: 0; text-decoration: none; transition: all .2s; }
+.btn-ghost:hover { border-color: var(--pink); color: var(--pink); box-shadow: var(--glow-pink); }
+.photo-frame { width: 380px; position: relative; flex-shrink: 0; }
+.photo-ring { position: absolute; inset: -4px; border-radius: 22px; background: linear-gradient(135deg, var(--cyan), var(--pink), var(--gold)); z-index: 0; }
+.photo-ring-mask { display: none; }
+.photo-placeholder, .photo-img { position: relative; border-radius: 18px; border: none; z-index: 2; overflow: hidden; width: 380px; height: 480px; object-fit: cover; object-position: center top; display: block; }
+/* STATS */
+.stats-bar { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; max-width: 1100px; margin: 0 auto; border: 1px solid var(--border); background: var(--card); }
+.stat-box { padding: 2rem 1.5rem; text-align: center; border-right: 1px solid var(--border); transition: background .3s; position: relative; overflow: hidden; }
+.stat-box::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: transparent; transition: background .3s; }
+.stat-box:hover::after { background: var(--cyan); }
+.stat-box:nth-child(2):hover::after { background: var(--pink); }
+.stat-box:nth-child(3):hover::after { background: var(--gold); }
+.stat-box:nth-child(4):hover::after { background: var(--green); }
+.stat-box:last-child { border-right: none; }
+.stat-box:hover { background: rgba(255,255,255,0.02); }
+.stat-n { font-family: var(--font-display); font-size: 3.5rem; line-height: 1; letter-spacing: .05em; }
+.c1{color:var(--cyan);} .c2{color:var(--pink);} .c3{color:var(--gold);} .c4{color:var(--green);}
+.stat-l { font-family: var(--font-mono); font-size: .65rem; color: var(--muted); letter-spacing: .12em; text-transform: uppercase; margin-top: .5rem; }
+
+/* SECTION LABELS */
+.section-label { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .22em; color: var(--cyan); text-transform: uppercase; margin-bottom: .7rem; opacity: .75; }
+.section-title { font-family: var(--font-display); font-size: clamp(2.5rem,5vw,4rem); line-height: 1; letter-spacing: .03em; margin-bottom: 3rem; background: linear-gradient(90deg, var(--text) 0%, var(--muted) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+/* ABOUT */
+#about { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+.about-body p { color: var(--muted); margin-bottom: 1.2rem; font-size: 1rem; line-height: 1.85; }
+.about-body p strong { color: var(--text); }
+.about-interests { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
+.interest-chip { font-family: var(--font-mono); font-size: .68rem; padding: .38rem .9rem; border: 1px solid var(--border); color: var(--muted); letter-spacing: .05em; transition: all .2s; cursor: default; clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px)); }
+.interest-chip:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,240,255,0.05); }
+.g-card { background: var(--card); border: 1px solid var(--border); padding: 2rem; position: relative; }
+.g-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: linear-gradient(to bottom, var(--cyan), var(--pink)); }
+.cat-label { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .18em; color: var(--cyan); text-transform: uppercase; margin-bottom: 1.4rem; }
+.info-table { display: flex; flex-direction: column; }
+.info-row { display: flex; justify-content: space-between; align-items: center; padding: .7rem 0; border-bottom: 1px solid var(--border2); font-size: .88rem; gap: 1rem; }
+.info-row:last-child { border-bottom: none; }
+.info-row span:first-child { color: var(--muted); font-family: var(--font-mono); font-size: .72rem; flex-shrink: 0; }
+.info-row span:last-child { color: var(--text); text-align: right; }
+.status-dot { display: inline-flex; align-items: center; gap: .4rem; }
+.status-dot::before { content: ''; width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse-dot 1.5s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100% { box-shadow: 0 0 0 0 rgba(57,255,143,0.4); } 50% { box-shadow: 0 0 0 6px rgba(57,255,143,0); } }
+
+/* LEARNING TIMELINE */
+.learn-vtl { position: relative; padding-left: 2.5rem; margin-top: 1rem; }
+.learn-vtl::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--gold), var(--cyan), var(--pink), transparent); }
+.lvtl-item { position: relative; margin-bottom: 1.6rem; opacity: 0; transform: translateX(-16px); transition: opacity .5s ease, transform .5s ease; }
+.lvtl-item.visible { opacity: 1; transform: translateX(0); }
+.lvtl-dot { position: absolute; left: -2.72rem; top: 1.1rem; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--bg); transition: transform .25s, box-shadow .25s; z-index: 1; }
+.lvtl-item:hover .lvtl-dot { transform: scale(1.5); }
+.lvtl-card { background: var(--card); border: 1px solid var(--border); padding: 1.2rem 1.4rem; display: flex; align-items: flex-start; gap: 1rem; transition: border-color .25s, box-shadow .25s, transform .25s; position: relative; overflow: hidden; cursor: default; }
+.lvtl-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; opacity: 0; transition: opacity .25s; }
+.lvtl-item:hover .lvtl-card::before { opacity: 1; }
+.lvtl-item:hover .lvtl-card { transform: translateX(6px); background: rgba(255,255,255,0.015); }
+.lv-gold .lvtl-card::before{background:var(--gold);} .lv-gold:hover .lvtl-dot{box-shadow:0 0 10px var(--gold);} .lv-gold:hover .lvtl-card{border-color:rgba(255,210,63,0.25);}
+.lv-cyan .lvtl-card::before{background:var(--cyan);} .lv-cyan:hover .lvtl-dot{box-shadow:0 0 10px var(--cyan);} .lv-cyan:hover .lvtl-card{border-color:rgba(0,240,255,0.25);}
+.lv-pink .lvtl-card::before{background:var(--pink);} .lv-pink:hover .lvtl-dot{box-shadow:0 0 10px var(--pink);} .lv-pink:hover .lvtl-card{border-color:rgba(255,45,155,0.25);}
+.lv-green .lvtl-card::before{background:var(--green);} .lv-green:hover .lvtl-dot{box-shadow:0 0 10px var(--green);} .lv-green:hover .lvtl-card{border-color:rgba(57,255,143,0.25);}
+.lvtl-icon { font-size: 1.7rem; line-height: 1; flex-shrink: 0; margin-top: .1rem; }
+.lvtl-name { font-size: .9rem; font-weight: 600; color: var(--text); margin-bottom: .15rem; line-height: 1.3; }
+.lvtl-issuer { font-family: var(--font-mono); font-size: .65rem; color: var(--muted); margin-bottom: .4rem; }
+.lvtl-date { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .08em; padding: .1rem .5rem; display: inline-block; }
+.lv-gold .lvtl-date{color:var(--gold);background:rgba(255,210,63,0.07);border:1px solid rgba(255,210,63,0.18);}
+.lv-cyan .lvtl-date{color:var(--cyan);background:rgba(0,240,255,0.07);border:1px solid rgba(0,240,255,0.18);}
+.lv-pink .lvtl-date{color:var(--pink);background:rgba(255,45,155,0.07);border:1px solid rgba(255,45,155,0.18);}
+.lv-green .lvtl-date{color:var(--green);background:rgba(57,255,143,0.07);border:1px solid rgba(57,255,143,0.18);}
+
+/* EDUCATION */
+#education { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; }
+.timeline { position: relative; padding-left: 2rem; }
+.timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--cyan), var(--pink), transparent); }
+.t-item { position: relative; margin-bottom: 3rem; padding-left: 2.5rem; opacity: 0; transform: translateY(20px); transition: opacity .6s, transform .6s; }
+.t-item.visible { opacity: 1; transform: translateY(0); }
+.t-dot { position: absolute; left: -2.22rem; top: .35rem; width: 11px; height: 11px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 14px var(--cyan); }
+.t-top { display: flex; align-items: center; gap: 1rem; margin-bottom: .5rem; flex-wrap: wrap; }
+.t-year { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); letter-spacing: .1em; }
+.t-badge { font-family: var(--font-mono); font-size: .62rem; padding: .22rem .7rem; border: 1px solid rgba(0,240,255,0.2); color: var(--cyan); background: rgba(0,240,255,0.06); letter-spacing: .08em; }
+.t-degree { font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: .2rem; }
+.t-inst { font-family: var(--font-mono); font-size: .76rem; color: var(--muted); margin-bottom: .6rem; }
+.t-desc { font-size: .88rem; color: var(--muted); line-height: 1.75; margin-bottom: .8rem; }
+.t-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+.t-tag { font-family: var(--font-mono); font-size: .62rem; padding: .22rem .6rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--muted); letter-spacing: .04em; }
+
+/* PROJECTS */
+#projects { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; }
+.proj-filter { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2.5rem; }
+.filter-btn { font-family: var(--font-mono); font-size: .66rem; padding: .38rem .95rem; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; letter-spacing: .07em; transition: all .2s; }
+.filter-btn:hover, .filter-btn.active { border-color: var(--cyan); color: var(--cyan); background: rgba(0,240,255,0.05); }
+.proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 1.2rem; }
+.proj-card { background: var(--card); border: 1px solid var(--border); overflow: hidden; cursor: pointer; opacity: 0; transform: translateY(20px); transition: opacity .5s, transform .5s, box-shadow .3s, border-color .3s; position: relative; }
+.proj-card.visible { opacity: 1; transform: translateY(0); }
+.proj-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,240,255,0.04) 0%, transparent 60%); opacity: 0; transition: opacity .3s; pointer-events: none; }
+.proj-card:hover { transform: translateY(-5px); box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,240,255,0.12); border-color: rgba(0,240,255,0.15); }
+.proj-card:hover::after { opacity: 1; }
+.proj-card.featured { border-color: rgba(255,210,63,0.18); }
+.proj-card.featured::after { background: linear-gradient(135deg, rgba(255,210,63,0.04) 0%, transparent 60%); }
+.proj-card.featured:hover { box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,210,63,0.2); border-color: rgba(255,210,63,0.3); }
+.proj-card::before { content: ''; position: absolute; top: 0; right: 0; width: 0; height: 0; border-style: solid; border-width: 0 28px 28px 0; border-color: transparent rgba(0,240,255,0.1) transparent transparent; transition: border-color .3s; z-index: 1; }
+.proj-card.featured::before { border-color: transparent rgba(255,210,63,0.15) transparent transparent; }
+.proj-thumb { height: 175px; overflow: hidden; background: var(--bg2); position: relative; }
+.proj-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s, filter .5s; filter: brightness(.65) saturate(.7); }
+.proj-card:hover .proj-thumb img { transform: scale(1.05); filter: brightness(.85) saturate(1.1); }
+.proj-thumb-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; background: linear-gradient(135deg, var(--card) 0%, var(--bg2) 100%); }
+.proj-num { position: absolute; top: .8rem; left: 1rem; font-family: var(--font-display); font-size: 1.6rem; color: rgba(255,255,255,0.07); line-height: 1; z-index: 1; }
+.proj-featured-badge { position: absolute; top: .8rem; right: .8rem; font-family: var(--font-mono); font-size: .55rem; padding: .18rem .55rem; background: rgba(255,210,63,0.1); border: 1px solid rgba(255,210,63,0.35); color: var(--gold); letter-spacing: .08em; z-index: 2; }
+.proj-body { padding: 1.3rem; }
+.proj-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: .5rem; }
+.proj-name { font-size: .96rem; font-weight: 600; color: var(--text); }
+.proj-year { font-family: var(--font-mono); font-size: .6rem; color: var(--muted); background: rgba(255,255,255,0.03); padding: .18rem .45rem; border: 1px solid var(--border); }
+.proj-desc { font-size: .82rem; color: var(--muted); line-height: 1.65; margin-bottom: .9rem; }
+.proj-stack { display: flex; flex-wrap: wrap; gap: .35rem; }
+.proj-stack span { font-family: var(--font-mono); font-size: .6rem; padding: .18rem .55rem; background: rgba(0,240,255,0.05); border: 1px solid rgba(0,240,255,0.12); color: var(--cyan); letter-spacing: .04em; }
+.proj-click-hint { display: flex; align-items: center; gap: .4rem; font-family: var(--font-mono); font-size: .62rem; color: var(--muted); margin-top: .9rem; opacity: 0; transition: opacity .2s; }
+.proj-card:hover .proj-click-hint { opacity: 1; }
+.proj-click-hint::before { content: '▶'; color: var(--pink); font-size: .48rem; }
+
+.proj-footer-btn { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--font-mono); font-size: .66rem; color: var(--cyan); text-decoration: none; border: 1px solid rgba(0,240,255,0.2); padding: .28rem .75rem; margin-top: .9rem; transition: all .2s; }
+.proj-footer-btn:hover { background: rgba(0,240,255,0.08); border-color: rgba(0,240,255,0.5); }
+.proj-footer-label { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--font-mono); font-size: .62rem; color: var(--muted); border: 1px solid var(--border); padding: .28rem .75rem; margin-top: .9rem; }
+
+/* ═══════════════════════════════
+   PROJECT TIMELINE — NAMES VISIBLE
+═══════════════════════════════ */
+#proj-timeline { padding: 4rem 0; overflow: hidden; position: relative; z-index: 2; }
+.ptl-header { padding: 0 3rem; max-width: 1100px; margin: 0 auto 3rem; }
+.ptl-scroll-wrap { overflow-x: auto; overflow-y: visible; padding: 6rem 4rem; scrollbar-width: thin; scrollbar-color: var(--cyan) transparent; cursor: grab; }
+.ptl-scroll-wrap:active { cursor: grabbing; }
+.ptl-scroll-wrap::-webkit-scrollbar { height: 2px; }
+.ptl-scroll-wrap::-webkit-scrollbar-thumb { background: var(--cyan); }
+.ptl-track { display: flex; align-items: center; min-width: max-content; position: relative; padding: 0 2rem; }
+.ptl-track::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); height: 1px; background: linear-gradient(90deg, transparent, var(--cyan) 5%, var(--pink) 50%, var(--gold) 95%, transparent); z-index: 0; }
+
+.ptl-year-div { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; margin: 0 1.5rem; }
+.ptl-year-line { width: 1px; height: 60px; }
+.ptl-year-text { font-family: var(--font-display); font-size: 3rem; letter-spacing: .1em; line-height: 1; white-space: nowrap; opacity: 0.12; }
+
+/* Node: shows both date and project name visibly */
+.ptl-node { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 2; margin: 0 2.8rem; cursor: pointer; --node-color: var(--cyan); }
+.ptl-node:nth-child(even) { flex-direction: column-reverse; }
+
+.ptl-node-upper { display: flex; flex-direction: column; align-items: center; gap: .3rem; margin-bottom: .35rem; }
+.ptl-node:nth-child(even) .ptl-node-upper { margin-bottom: 0; margin-top: .35rem; }
+.ptl-date-label { font-family: var(--font-mono); font-size: .56rem; color: var(--muted); letter-spacing: .1em; white-space: nowrap; background: var(--bg); padding: .06rem .4rem; border: 1px solid rgba(255,255,255,0.05); }
+.ptl-proj-name-label { font-family: var(--font-mono); font-size: .64rem; color: var(--text); white-space: nowrap; font-weight: 700; letter-spacing: .04em; background: var(--bg); padding: .12rem .55rem; border: 1px solid rgba(255,255,255,0.1); transition: color .2s, border-color .2s; }
+.ptl-node:hover .ptl-proj-name-label { color: var(--node-color); border-color: var(--node-color); }
+
+.ptl-stem { width: 1px; height: 32px; background: rgba(255,255,255,0.08); flex-shrink: 0; }
+
+.ptl-dot-wrap { position: relative; flex-shrink: 0; }
+.ptl-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--bg); flex-shrink: 0; transition: transform .25s, box-shadow .25s; background: var(--node-color); }
+.ptl-node:hover .ptl-dot { transform: scale(1.5); box-shadow: 0 0 16px var(--node-color); }
+
+.ptl-node-lower { display: flex; flex-direction: column; align-items: center; gap: .3rem; margin-top: .35rem; }
+.ptl-node:nth-child(even) .ptl-node-lower { margin-top: 0; margin-bottom: .35rem; }
+
+.ptl-drag-hint { display: flex; align-items: center; gap: .5rem; font-family: var(--font-mono); font-size: .62rem; color: var(--muted); padding: 0 3rem; max-width: 1100px; margin: .5rem auto 0; animation: hint-fade 3s ease 2.5s forwards; }
+@keyframes hint-fade { to { opacity: 0; } }
+
+/* MODAL */
+.modal-backdrop { position: fixed; inset: 0; z-index: 5000; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; pointer-events: none; transition: opacity .4s; }
+.modal-backdrop.open { opacity: 1; pointer-events: all; }
+.modal-blur-bg { position: absolute; inset: 0; background: rgba(6,6,8,0.88); backdrop-filter: blur(28px) saturate(0.4); }
+.modal-card { position: relative; background: var(--card); border: 1px solid rgba(0,240,255,0.18); width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto; transform: scale(.92) translateY(24px); transition: transform .4s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 40px 120px rgba(0,0,0,0.8), var(--glow-cyan); }
+.modal-backdrop.open .modal-card { transform: scale(1) translateY(0); }
+.modal-img { width: 100%; height: 240px; object-fit: cover; filter: brightness(.75); }
+.modal-img.hidden { display: none; }
+.modal-body { padding: 2rem; }
+.modal-title { font-family: var(--font-display); font-size: 2.4rem; letter-spacing: .03em; margin-bottom: .5rem; }
+.modal-meta { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.modal-year { font-family: var(--font-mono); font-size: .7rem; color: var(--muted); }
+.modal-category { font-family: var(--font-mono); font-size: .62rem; padding: .22rem .65rem; border: 1px solid rgba(255,210,63,0.22); color: var(--gold); background: rgba(255,210,63,0.05); }
+.modal-desc { color: var(--muted); line-height: 1.85; margin-bottom: 1.5rem; font-size: .95rem; }
+.modal-stack { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 2rem; }
+.modal-stack span { font-family: var(--font-mono); font-size: .68rem; padding: .28rem .75rem; background: rgba(0,240,255,0.07); border: 1px solid rgba(0,240,255,0.18); color: var(--cyan); }
+.modal-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.modal-btn { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--font-mono); font-size: .76rem; font-weight: 700; padding: .7rem 1.5rem; text-decoration: none; cursor: pointer; border: none; transition: all .2s; }
+.modal-btn-primary { background: var(--cyan); color: #000; }
+.modal-btn-primary:hover { box-shadow: var(--glow-cyan); transform: translateY(-1px); }
+.modal-btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text); }
+.modal-btn-ghost:hover { border-color: var(--pink); color: var(--pink); }
+.modal-close { position: absolute; top: 1rem; right: 1rem; width: 32px; height: 32px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; color: var(--muted); transition: all .2s; z-index: 10; }
+.modal-close:hover { background: rgba(255,45,155,0.12); border-color: var(--pink); color: var(--pink); }
+body.modal-open { overflow: hidden; }
+
+/* SKILLS */
+#skills { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; }
+.skills-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+.skill-category { margin-bottom: 2.5rem; }
+.skill-cat-title { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .16em; color: var(--pink); text-transform: uppercase; margin-bottom: 1.2rem; }
+.skill-item { margin-bottom: 1.1rem; }
+.skill-top { display: flex; justify-content: space-between; margin-bottom: .4rem; }
+.skill-name { font-size: .86rem; color: var(--text); }
+.skill-pct { font-family: var(--font-mono); font-size: .7rem; color: var(--muted); }
+.skill-bar { height: 2px; background: rgba(255,255,255,0.05); overflow: hidden; }
+.skill-fill { height: 100%; width: 0; transition: width 1.3s cubic-bezier(0.23,1,0.32,1); }
+.fill-cyan{background:linear-gradient(90deg,var(--cyan),rgba(0,240,255,0.4));}
+.fill-pink{background:linear-gradient(90deg,var(--pink),rgba(255,45,155,0.4));}
+.fill-gold{background:linear-gradient(90deg,var(--gold),rgba(255,210,63,0.4));}
+.fill-green{background:linear-gradient(90deg,var(--green),rgba(57,255,143,0.4));}
+.tech-cloud { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.tech-pill { font-family: var(--font-mono); font-size: .68rem; padding: .4rem .9rem; border: 1px solid var(--border); color: var(--muted); cursor: default; transition: all .22s; letter-spacing: .04em; }
+.tech-pill:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,240,255,0.04); transform: translateY(-2px); }
+
+/* ACHIEVEMENTS */
+#achievements { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; }
+.achieve-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1rem; }
+.achieve-card { background: var(--card); border: 1px solid var(--border); padding: 1.8rem; position: relative; overflow: hidden; opacity: 0; transform: translateY(20px); transition: opacity .5s, transform .5s; }
+.achieve-card.visible { opacity: 1; transform: translateY(0); }
+.achieve-card:hover { transform: translateY(-4px); }
+.achieve-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1.5px; }
+.ac-cyan::before{background:linear-gradient(90deg,var(--cyan),transparent 70%);} .ac-cyan:hover{box-shadow:0 20px 50px rgba(0,0,0,.4),0 0 0 1px rgba(0,240,255,0.1);}
+.ac-pink::before{background:linear-gradient(90deg,var(--pink),transparent 70%);} .ac-pink:hover{box-shadow:0 20px 50px rgba(0,0,0,.4),0 0 0 1px rgba(255,45,155,0.1);}
+.ac-gold::before{background:linear-gradient(90deg,var(--gold),transparent 70%);} .ac-gold:hover{box-shadow:0 20px 50px rgba(0,0,0,.4),0 0 0 1px rgba(255,210,63,0.1);}
+.ac-green::before{background:linear-gradient(90deg,var(--green),transparent 70%);} .ac-green:hover{box-shadow:0 20px 50px rgba(0,0,0,.4),0 0 0 1px rgba(57,255,143,0.1);}
+.achieve-emoji { font-size: 2rem; margin-bottom: 1rem; display: block; }
+.achieve-title { font-size: .92rem; font-weight: 600; color: var(--text); margin-bottom: .4rem; }
+.achieve-desc { font-size: .8rem; color: var(--muted); line-height: 1.65; }
+
+/* CLUB */
+#club { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; }
+.club-banner { background: var(--card); border: 1px solid var(--border); position: relative; overflow: hidden; }
+.club-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at top right, rgba(255,45,155,0.05) 0%, transparent 55%), radial-gradient(ellipse at bottom left, rgba(0,240,255,0.04) 0%, transparent 55%); pointer-events: none; }
+.club-banner::after { content: ''; position: absolute; top: 0; right: 0; width: 0; height: 0; border-style: solid; border-width: 0 60px 60px 0; border-color: transparent rgba(255,45,155,0.12) transparent transparent; }
+.club-banner-inner { padding: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+.club-logo-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+.club-bot-emoji { font-size: 2.5rem; line-height: 1; }
+.club-name { font-family: var(--font-display); font-size: 1.9rem; letter-spacing: .06em; color: var(--text); line-height: 1; }
+.club-sub-name { font-family: var(--font-mono); font-size: .62rem; color: var(--muted); letter-spacing: .12em; text-transform: uppercase; margin-top: .3rem; }
+.club-role-badge { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--font-mono); font-size: .65rem; padding: .3rem .9rem; background: rgba(255,45,155,0.08); border: 1px solid rgba(255,45,155,0.3); color: var(--pink); letter-spacing: .08em; margin-bottom: 1.2rem; }
+.club-role-dot { width: 6px; height: 6px; background: var(--pink); border-radius: 50%; animation: pulse-dot 1.5s ease-in-out infinite; }
+.club-desc { color: var(--muted); font-size: .92rem; line-height: 1.85; margin-bottom: 1.2rem; }
+.club-tags { display: flex; flex-wrap: wrap; gap: .45rem; }
+.club-tag { font-family: var(--font-mono); font-size: .65rem; padding: .32rem .85rem; border: 1px solid rgba(255,45,155,0.18); background: rgba(255,45,155,0.05); color: var(--pink); letter-spacing: .04em; transition: all .2s; }
+.club-tag:hover { background: rgba(255,45,155,0.1); transform: translateY(-2px); }
+.club-right-col { display: flex; flex-direction: column; gap: 1rem; }
+.club-stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: .7rem; }
+.club-stat-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: .9rem; text-align: center; }
+.club-stat-n { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: .05em; }
+.club-stat-l { font-family: var(--font-mono); font-size: .58rem; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; margin-top: .2rem; }
+.club-work-list { display: flex; flex-direction: column; gap: .5rem; }
+.club-work-item { display: flex; align-items: flex-start; gap: .8rem; padding: .65rem .9rem; background: rgba(255,255,255,0.015); border: 1px solid var(--border); transition: border-color .2s; }
+.club-work-item:hover { border-color: rgba(0,240,255,0.15); }
+.club-work-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; margin-top: .15rem; }
+.club-work-text { color: var(--muted); font-size: .8rem; line-height: 1.5; }
+.club-work-text strong { color: var(--text); display: block; font-size: .82rem; margin-bottom: .1rem; }
+
+/* CURRENTLY LEARNING */
+#learning { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; }
+.now-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: .9rem; }
+.now-card { background: var(--card); border: 1px solid var(--border); padding: 1.4rem; position: relative; overflow: hidden; opacity: 0; transform: translateY(16px); transition: opacity .5s, transform .5s, border-color .25s; }
+.now-card.visible { opacity: 1; transform: translateY(0); }
+.now-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; opacity: 0; transition: opacity .25s; }
+.now-card:hover { transform: translateY(-3px); }
+.nc-cyan::after{background:linear-gradient(90deg,transparent,var(--cyan),transparent);} .nc-cyan:hover{border-color:rgba(0,240,255,0.2);} .nc-cyan:hover::after{opacity:1;}
+.nc-pink::after{background:linear-gradient(90deg,transparent,var(--pink),transparent);} .nc-pink:hover{border-color:rgba(255,45,155,0.2);} .nc-pink:hover::after{opacity:1;}
+.nc-gold::after{background:linear-gradient(90deg,transparent,var(--gold),transparent);} .nc-gold:hover{border-color:rgba(255,210,63,0.2);} .nc-gold:hover::after{opacity:1;}
+.nc-green::after{background:linear-gradient(90deg,transparent,var(--green),transparent);} .nc-green:hover{border-color:rgba(57,255,143,0.2);} .nc-green:hover::after{opacity:1;}
+.now-icon { font-size: 1.8rem; margin-bottom: .7rem; display: block; }
+.now-title { font-size: .88rem; font-weight: 600; color: var(--text); margin-bottom: .25rem; }
+.now-why { font-family: var(--font-mono); font-size: .63rem; color: var(--muted); letter-spacing: .03em; line-height: 1.55; }
+.now-ticker-wrap { margin-top: 2.5rem; overflow: hidden; border: 1px solid var(--border); padding: 1.2rem 0; background: var(--card); position: relative; }
+.now-ticker-wrap::before { content: 'NOW LEARNING'; position: absolute; left: 1.5rem; top: 50%; transform: translateY(-50%); font-family: var(--font-mono); font-size: .62rem; letter-spacing: .15em; color: var(--pink); background: var(--card); padding: .2rem .8rem; border-right: 1px solid var(--border); z-index: 2; white-space: nowrap; }
+.ticker-track { display: flex; gap: 3rem; animation: ticker 22s linear infinite; padding-left: 220px; width: max-content; }
+@keyframes ticker { to { transform: translateX(-50%); } }
+.ticker-item { display: flex; align-items: center; gap: .6rem; font-family: var(--font-mono); font-size: .76rem; color: var(--muted); white-space: nowrap; }
+.ticker-dot { width: 4px; height: 4px; background: var(--cyan); border-radius: 50%; }
+
+/* ═══════════════════════════════
+   BEYOND THE SCREEN — BENTO (NON-TECHNICAL ONLY)
+═══════════════════════════════ */
+#beyond { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; }
+.bento-grid { display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: minmax(140px, auto); gap: .9rem; margin-top: 2.5rem; }
+.bento-card { background: var(--card); border: 1px solid var(--border); padding: 1.6rem; position: relative; overflow: hidden; opacity: 0; transform: translateY(18px); transition: opacity .5s, transform .5s, border-color .25s, box-shadow .25s; }
+.bento-card.visible { opacity: 1; transform: translateY(0); }
+.bento-card:hover { transform: translateY(-4px); }
+.bento-2{grid-column:span 2;} .bento-3{grid-column:span 3;} .bento-4{grid-column:span 4;} .bento-6{grid-column:span 6;} .bento-row2{grid-row:span 2;}
+.bento-gold{border-top:1.5px solid rgba(255,210,63,0.35);} .bento-gold:hover{border-color:rgba(255,210,63,0.5);box-shadow:0 16px 48px rgba(0,0,0,.4),0 0 0 1px rgba(255,210,63,0.15);}
+.bento-pink{border-top:1.5px solid rgba(255,45,155,0.35);} .bento-pink:hover{border-color:rgba(255,45,155,0.5);box-shadow:0 16px 48px rgba(0,0,0,.4),0 0 0 1px rgba(255,45,155,0.15);}
+.bento-cyan{border-top:1.5px solid rgba(0,240,255,0.35);} .bento-cyan:hover{border-color:rgba(0,240,255,0.5);box-shadow:0 16px 48px rgba(0,0,0,.4),0 0 0 1px rgba(0,240,255,0.15);}
+.bento-green{border-top:1.5px solid rgba(57,255,143,0.35);} .bento-green:hover{border-color:rgba(57,255,143,0.5);box-shadow:0 16px 48px rgba(0,0,0,.4),0 0 0 1px rgba(57,255,143,0.15);}
+.bento-violet{border-top:1.5px solid rgba(162,89,255,0.35);} .bento-violet:hover{border-color:rgba(162,89,255,0.5);box-shadow:0 16px 48px rgba(0,0,0,.4),0 0 0 1px rgba(162,89,255,0.15);}
+.bento-bg-emoji { position: absolute; right: 1rem; bottom: .5rem; font-size: 5rem; opacity: 0.06; line-height: 1; pointer-events: none; transition: opacity .3s, transform .3s; }
+.bento-card:hover .bento-bg-emoji { opacity: 0.1; transform: scale(1.08) rotate(-5deg); }
+.bento-eyebrow { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .15em; text-transform: uppercase; margin-bottom: .55rem; }
+.bento-title { font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: .5rem; line-height: 1.3; }
+.bento-body { font-size: .82rem; color: var(--muted); line-height: 1.7; }
+.bento-badge { display: inline-flex; align-items: center; gap: .35rem; font-family: var(--font-mono); font-size: .6rem; padding: .22rem .65rem; margin-top: .7rem; letter-spacing: .06em; }
+.bento-badge-gold{background:rgba(255,210,63,0.1);border:1px solid rgba(255,210,63,0.3);color:var(--gold);}
+.bento-badge-pink{background:rgba(255,45,155,0.1);border:1px solid rgba(255,45,155,0.3);color:var(--pink);}
+.bento-badge-green{background:rgba(57,255,143,0.1);border:1px solid rgba(57,255,143,0.3);color:var(--green);}
+.bento-badge-violet{background:rgba(162,89,255,0.1);border:1px solid rgba(162,89,255,0.3);color:var(--violet);}
+.bento-badge-cyan{background:rgba(0,240,255,0.1);border:1px solid rgba(0,240,255,0.3);color:var(--cyan);}
+.bento-streak { display: flex; gap: .3rem; margin-top: .7rem; align-items: center; }
+.streak-pip { width: 10px; height: 10px; border-radius: 50%; }
+.streak-label { font-family: var(--font-mono); font-size: .6rem; color: var(--muted); margin-left: .3rem; }
+.bento-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-top: .8rem; }
+.bento-mini-item { background: rgba(255,255,255,0.03); border: 1px solid var(--border2); padding: .5rem .7rem; font-family: var(--font-mono); font-size: .62rem; color: var(--muted); }
+.bento-mini-item span { display: block; color: var(--text); font-size: .68rem; margin-bottom: .15rem; }
+
+/* CONTACT */
+#contact { padding: 6rem 3rem; max-width: 1200px; margin: 0 auto; }
+.contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.contact-tagline { font-family: var(--font-display); font-size: clamp(2rem,4vw,3.5rem); line-height: 1.1; margin-bottom: 1.5rem; }
+.contact-tagline span { color: var(--cyan); }
+.contact-sub { color: var(--muted); line-height: 1.85; margin-bottom: 2rem; font-size: .95rem; }
+.social-links { display: flex; flex-direction: column; gap: .7rem; }
+.social-link { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.1rem; background: var(--card); border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all .2s; font-size: .88rem; }
+.social-link:hover { border-color: var(--cyan); color: var(--cyan); transform: translateX(5px); }
+.social-icon { font-size: 1.1rem; width: 24px; text-align: center; }
+.social-handle { font-family: var(--font-mono); font-size: .76rem; color: var(--muted); margin-left: auto; transition: color .2s; }
+.social-link:hover .social-handle { color: var(--cyan); }
+
+/* Address cards — formal dual address */
+.address-block { display: flex; flex-direction: column; gap: .6rem; margin-top: .2rem; }
+.address-card { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 1.2rem; background: var(--card); border: 1px solid var(--border); position: relative; }
+.address-card::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; }
+.address-card.official::before { background: var(--cyan); }
+.address-card.permanent::before { background: var(--gold); }
+.address-card-icon { font-size: 1.2rem; width: 24px; text-align: center; flex-shrink: 0; margin-top: .1rem; }
+.address-card-content {}
+.address-card-type { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .16em; text-transform: uppercase; margin-bottom: .3rem; }
+.address-card.official .address-card-type { color: var(--cyan); }
+.address-card.permanent .address-card-type { color: var(--gold); }
+.address-card-name { font-size: .88rem; font-weight: 600; color: var(--text); margin-bottom: .2rem; }
+.address-card-text { font-family: var(--font-mono); font-size: .7rem; color: var(--muted); line-height: 1.8; }
+
+.contact-form { display: flex; flex-direction: column; gap: .9rem; }
+.form-group label { display: block; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; margin-bottom: .4rem; }
+.form-group input, .form-group textarea { width: 100%; background: var(--card); border: 1px solid var(--border); padding: .8rem 1rem; color: var(--text); font-family: var(--font-body); font-size: .9rem; transition: border-color .2s, box-shadow .2s; resize: none; }
+.form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,240,255,0.06); }
+.form-group textarea { height: 110px; }
+.form-submit { display: inline-flex; align-items: center; gap: .5rem; background: var(--cyan); color: #000; font-family: var(--font-mono); font-size: .78rem; font-weight: 700; padding: .85rem 1.8rem; border: none; cursor: pointer; transition: all .2s; letter-spacing: .06em; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); }
+.form-submit:hover { box-shadow: var(--glow-cyan); transform: translateY(-2px); }
+
+/* SCROLL REVEAL */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1{transition-delay:.1s;} .reveal-delay-2{transition-delay:.2s;} .reveal-delay-3{transition-delay:.3s;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:3px;} ::-webkit-scrollbar-track{background:var(--bg);} ::-webkit-scrollbar-thumb{background:rgba(0,240,255,0.4);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-wrap,.about-grid,.skills-layout,.contact-layout,.club-banner-inner{grid-template-columns:1fr;gap:2.5rem;}
+  .photo-frame {
+  position: relative;
+  width: 260px;
+  height: 320px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.profile-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* THIS makes it fit perfectly */
+  object-position: center top; /* keeps your face nicely framed */
+  border-radius: 20px;
+}
+
+.photo-ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 20px;
+  z-index: 2;
+}
+
+.photo-ring-mask {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(4px);
+  border-radius: 20px;
+  z-index: 1;
+  pointer-events: none;
+}
+  .stats-bar{grid-template-columns:repeat(2,1fr);}
+  .stat-box:nth-child(2){border-right:none;}
+  .stat-box:nth-child(3){border-right:1px solid var(--border);border-top:1px solid var(--border);}
+  .stat-box:nth-child(4){border-top:1px solid var(--border);}
+  .topnav{padding:1rem 1.5rem;} .nav-links{gap:1rem;}
+  #hero,#about,#education,#projects,#skills,#certifications,#achievements,#club,#learning,#beyond,#contact{padding-left:1.5rem;padding-right:1.5rem;}
+  .bento-grid{grid-template-columns:repeat(2,1fr);}
+  .bento-2,.bento-3,.bento-4,.bento-6{grid-column:span 2;} .bento-row2{grid-row:span 1;}
+  .now-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:600px){
+  .nav-links li:not(:last-child){display:none;}
+  .bento-grid{grid-template-columns:1fr;}
+  .bento-2,.bento-3,.bento-4,.bento-6{grid-column:span 1;}
+  .now-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<canvas id="starfield"></canvas>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- NAV -->
+<nav class="topnav" id="topnav">
+  <a href="#hero" class="nav-logo">RS<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#beyond">Beyond</a></li>
+    <li><a href="#contact" class="nav-pill">Contact →</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-wrap" style="max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr auto;gap:4rem;align-items:center;">
+    <div>
+      <div class="hero-eyebrow">B.Tech CSC Core · VIT Vellore · Class of 2029</div>
+      <div id="typewriter" class="typewriter"></div>
+      <h1 class="hero-name">
+        RASHMI <br><span class="grad-text">SATHISH</span>
+      </h1>
+      <p class="hero-sub">
+        <strong>Computer Science Core undergraduate</strong> at VIT Vellore — building things at the crossroads of algorithms, computer vision, and robotics, while carrying a decade-long record in the arts and beyond.
+      </p>
+      <div class="btn-row">
+        <a href="#projects" class="btn-main">View Projects →</a>
+        <a href="https://github.com/rashmisathish2025" target="_blank" class="btn-ghost">GitHub ↗</a>
+        <a href="#contact" class="btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+      <div class="photo-frame">
+        <div class="photo-ring"></div>
+        <img src="me.jpeg" alt="Rashmi Sathish" class="photo-img" style="width:380px;height:480px;object-fit:cover;object-position:center top;border-radius:18px;display:block;position:relative;z-index:2;">
+    </div>
+
+</section>
+
+<!-- STATS -->
+<div style="max-width:1100px;margin:0 auto;padding:0 3rem;position:relative;z-index:2;">
+  <div class="stats-bar">
+    <div class="stat-box"><div class="stat-n c1" data-target="9">0</div><div class="stat-l">Projects Completed</div></div>
+    <div class="stat-box"><div class="stat-n c2" data-target="1">0</div><div class="stat-l">Hackathons</div></div>
+    <div class="stat-box"><div class="stat-n c3" data-target="8.1">0</div><div class="stat-l">CGPA</div></div>
+    <div class="stat-box"><div class="stat-n c4" data-target="100">0</div><div class="stat-l">AI Score — Class X</div></div>
+  </div>
+</div>
+
+<hr class="section-div" style="margin-top:3rem;">
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="wrap">
+    <p class="section-label">01 — Who I Am
+    <h2 class="section-title">A Little About Me.</h2>
+    <div class="about-grid">
+      <div class="about-body">
+        <p>
+          I am <strong>Rashmi Sathish</strong> — a first-year undergraduate student pursuing
+          <strong>B.Tech in Computer Science Core (CSC)</strong> at VIT Vellore. My academic
+          focus centres on building robust, practical systems in algorithms, computer vision, and
+          robotics, alongside a commitment to strong software engineering fundamentals. I am particularly motivated 
+          by the challenge of translating theoretical concepts into efficient, scalable, and production-ready solutions,
+          grounded in strong software engineering fundamentals.
+        </p>
+        <p>
+          Through the <strong>Robovitcs Club</strong> (Junior Core Member, AI-ML Domain), I have
+          extended my learning beyond the classroom — developing autonomous robots and AI-driven
+          vision systems in a collaborative, hardware-focused environment.Working alongside senior 
+          engineers has strengthened my ability to approach complex problems systematically, 
+          contribute to end-to-end system development, and operate effectively in hardware-integrated,
+          high-performance settings.
+        </p>
+        <p>
+          My passion for technology was crystallised by a <strong>perfect 100/100 in Artificial
+          Intelligence during CBSE Class X</strong>. That milestone set the direction for my
+          academic and professional pursuits. Since then, I have independently developed nine
+          projects spanning computer vision, machine learning, NLP, and embedded systems.
+        </p>
+       
+        <div class="about-interests">
+          <span class="interest-chip">Data Structures and Algorithms</span>
+          <span class="interest-chip">Computer Vision</span>
+          <span class="interest-chip">Robotics</span>
+          <span class="interest-chip">Machine Learning</span>
+          <span class="interest-chip">NLP</span>
+          <span class="interest-chip">Artificial Intelligence</span>
+          <span class="interest-chip">Web Development</span>
+
+  
+          <span class="interest-chip">UI Design</span>
+           <span class="interest-chip">Structured and Object Oriented Programming</span>
+        </div>
+      </div>
+      <div>
+        <div class="g-card">
+          <h3 class="cat-label">Quick Reference</h3>
+          <div class="info-table">
+            <div class="info-row"><span>University</span><span>VIT Vellore</span></div>
+            <div class="info-row"><span>Programme</span><span>B.Tech — CSC Core</span></div>
+            <div class="info-row"><span>Year of Study</span><span>First Year (2025–2029)</span></div>
+            <div class="info-row"><span>CGPA</span><span style="color:var(--green);">8.1 / 10</span></div>
+            <div class="info-row"><span>Club</span><span>Robovitcs Club, VIT</span></div>
+            <div class="info-row"><span>Club Role</span><span style="color:var(--pink);">Junior Core — AI-ML Domain</span></div>
+            <div class="info-row"><span>Hometown</span><span>Chennai, Tamil Nadu</span></div>
+            <div class="info-row"><span>Languages Known</span><span>English · Tamil · Hindi</span></div>
+            <div class="info-row"><span>Availability</span><span class="status-dot">Open for collaborations and internships</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-div">
+
+<!-- ─── EDUCATION ─── -->
+<section id="education">
+  <div class="wrap">
+    <p class="section-label">02 — The Journey</p>
+    <h2 class="section-title">Where I've Studied.</h2>
+    <div class="timeline">
+
+      <div class="t-item reveal">
+        <div class="t-dot"></div>
+        <div class="t-top"><span class="t-year">2025 – 2029</span><span class="t-badge">Current</span></div>
+        <div class="t-degree">B.Tech — Computer Science Core (CSC)</div>
+        <div class="t-inst">VIT Vellore, Tamil Nadu</div>
+        <div class="t-desc">Currently pursuing core courses in Algorithms and Data Structures, Database Management Systems, Computer Networks, Operating Systems, and Software Engineering. Junior Core Member of the Robovitcs Club (AI-ML Domain, 2026). Current CGPA: 8.1 / 10.</div>
+        <div class="t-tags"><span class="t-tag">CSC Core</span><span class="t-tag">Algorithms & DSA</span><span class="t-tag">DBMS</span><span class="t-tag">Computer Networks</span><span class="t-tag">Operating Systems</span><span class="t-tag">Robovitcs Club</span></div>
+      </div>
+
+      <div class="t-item reveal reveal-delay-1">
+        <div class="t-dot" style="background:var(--pink);box-shadow:0 0 12px var(--pink);"></div>
+        <div class="t-top"><span class="t-year">2026</span><span class="t-badge" style="color:var(--pink);background:rgba(255,45,155,0.08);border-color:rgba(255,45,155,0.2);">Junior Core Member</span></div>
+        <div class="t-degree">Robovitcs Club — Junior Core Member (AI-ML Domain)</div>
+        <div class="t-inst">VIT Vellore, India</div>
+        <div class="t-desc">Selected through a competitive process to join VIT's premier robotics club. Responsibilities include contributing to autonomous robot development, sensor integration, and AI-driven control systems. Projects undertaken include the gesture-controlled bot and an obstacle-avoidance robot, both completed in collaboration with senior members.</div>
+        <div class="t-tags"><span class="t-tag">Robotics</span><span class="t-tag">ESP 32</span><span class="t-tag">AI-ML</span><span class="t-tag">Embedded Systems</span><span class="t-tag">Computer Vision</span><span class="t-tag">ROS</span></div>
+      </div>
+
+      <div class="t-item reveal reveal-delay-2">
+        <div class="t-dot" style="background:var(--gold);box-shadow:0 0 12px var(--gold);"></div>
+        <div class="t-top"><span class="t-year">2023 – 2025</span><span class="t-badge" style="color:var(--gold);background:rgba(255,210,63,0.08);border-color:rgba(255,210,63,0.2);">88%</span></div>
+        <div class="t-degree">Higher Secondary Education — PCM with Computer Science</div>
+        <div class="t-inst">Chettinad Vidyashram, Chennai</div>
+        <div class="t-desc">CBSE Class XII — 88% aggregate. Concurrent preparation for JEE Mains, VITEEE, and BITSAT and various other enterance exams. Developed a strong foundation in Mathematics, Physics, and Computer Science fundamentals during this period.</div>
+        <div class="t-tags"><span class="t-tag">JEE Mains</span><span class="t-tag">CBSE Board</span><span class="t-tag">VITEEE</span><span class="t-tag">BITSAT</span><span class="t-tag">Python</span><span class="t-tag">SQL</span></div>
+      </div>
+
+      <div class="t-item reveal reveal-delay-3">
+        <div class="t-dot" style="background:var(--green);box-shadow:0 0 12px var(--green);"></div>
+        <div class="t-top"><span class="t-year">2021 – 2023</span><span class="t-badge" style="color:var(--green);background:rgba(57,255,143,0.08);border-color:rgba(57,255,143,0.2);">95.8%</span></div>
+        <div class="t-degree">Secondary Education — Grades IX and X</div>
+        <div class="t-inst">Sri Sankara Senior Secondary School, Chennai</div>
+        <div class="t-desc">CBSE Class X — 95.8% aggregate. Achieved a <strong style="color:var(--green);">perfect 100/100 in Artificial Intelligence</strong> — a result that served as the defining motivator for pursuing Computer Science at the undergraduate level.</div>
+        <div class="t-tags"><span class="t-tag">AI — 100/100</span><span class="t-tag">Mathematics — 91/100</span><span class="t-tag">Science — 96/100</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="section-div">
+
+<!-- ─── PROJECTS ─── -->
+<section id="projects">
+  <div class="wrap">
+    <p class="section-label">03 — Things I've Built</p>
+    <h2 class="section-title">My Projects.</h2>
+    <div class="proj-filter">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="ML">ML / AI</button>
+      <button class="filter-btn" data-filter="CV">Computer Vision</button>
+      <button class="filter-btn" data-filter="Robotics">Robotics</button>
+      <button class="filter-btn" data-filter="App">Applications</button>
+    </div>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;padding:0 3rem;">
+    <div class="proj-grid" id="proj-grid">
+
+     <div class="proj-card featured reveal" data-filter="ML" data-name="Anomalyze" data-year="2026" data-category="Machine Learning" data-img="hack.jpeg" data-github="https://github.com/rashmisathish2025/AI_Hackathon" data-desc="An ML-based anomaly detection system employing the Isolation Forest algorithm to identify outliers in multidimensional datasets. Developed during a hackathon, it presents anomalies on an interactive Streamlit dashboard with configurable contamination thresholds. Capable of processing data streams and flagging unusual patterns in real time." data-stack="Python,Machine Learning,Isolation Forest,Pandas,Matplotlib,Streamlit">
+      <div class="proj-thumb"><div class="proj-num">01</div><div class="proj-featured-badge">⭐ Hackathon</div><div class="proj-thumb-placeholder">🔬</div><img src="hack.jpeg" alt="Anomalyze" onerror="this.style.display='none'"></div>
+      <div class="proj-body"><div class="proj-header"><div class="proj-name">Anomalyze</div><span class="proj-year">2026</span></div><p class="proj-desc">Hackathon ML project — anomaly detection via Isolation Forest with an interactive Streamlit dashboard.</p><div class="proj-stack"><span>Python</span><span>ML</span><span>Isolation Forest</span><span>Streamlit</span></div><div class="proj-click-hint">Click for details</div><a href="https://github.com/rashmisathish2025/AI_Hackathon" target="_blank" class="proj-footer-btn">→ GitHub</a></div>
+    </div>
+
+      <div class="proj-card reveal reveal-delay-1" data-filter="ML" data-name="L-Fractal System" data-year="2026" data-category="Algorithms & Mathematics" data-img="fractal.jpeg" data-github="https://github.com/rashmisathish2025/gdsc_tech_Lfractal" data-desc="A recursive fractal generator that visualises L-shaped mathematical patterns using Python and Matplotlib. Configurable depth and angle parameters produce a wide variety of unique fractal structures, demonstrating the elegance of recursive computation in visual form." data-stack="Python,Matplotlib,Recursion,Algorithms,Mathematics">
+  <div class="proj-thumb"><div class="proj-num">02</div><div class="proj-thumb-placeholder">🌿</div><img src="fractal.jpeg" alt="L-Fractal" onerror="this.style.display='none'"></div>
+  <div class="proj-body"><div class="proj-header"><div class="proj-name">L-Fractal System</div><span class="proj-year">2026</span></div><p class="proj-desc">Recursive fractal generator visualising L-shaped patterns with configurable depth and angle parameters.</p><div class="proj-stack"><span>Python</span><span>Matplotlib</span><span>Recursion</span></div><div class="proj-click-hint">Click for details</div><a href="https://github.com/rashmisathish2025/gdsc_tech_Lfractal" target="_blank" class="proj-footer-btn">→ GitHub</a></div>
+</div>
+
+      <div class="proj-card reveal reveal-delay-2" data-filter="ML" data-name="AI Chatbot" data-year="2026" data-category="NLP / Artificial Intelligence" data-img="chatbot.jpg" data-github="" data-desc="A context-aware conversational AI system built using natural language processing techniques. The system processes user intent and maintains conversation context for coherent, multi-turn dialogue. Implements a hybrid retrieval-and-generative approach for FAQ handling, task assistance, and open-ended interaction." data-stack="Python,NLP,AI,NLTK,Regex,JSON">
+  <div class="proj-thumb"><div class="proj-num">03</div><div class="proj-thumb-placeholder">🤖</div><img src="chatbot.jpg" alt="AI Chatbot" onerror="this.style.display='none'"></div>
+  <div class="proj-body"><div class="proj-header"><div class="proj-name">AI Chatbot</div><span class="proj-year">2026</span></div><p class="proj-desc">Context-aware NLP chatbot with multi-turn conversation handling and intent detection.</p><div class="proj-stack"><span>Python</span><span>NLP</span><span>NLTK</span></div><div class="proj-click-hint">Click for details</div><span class="proj-footer-label">📋 Private Repo</span></div>
+</div>
+
+      <div class="proj-card featured reveal" data-filter="CV" data-name="Gesture Control Bot" data-year="2026" data-category="Computer Vision" data-img="GSB.jpeg" data-github="" data-desc="An AI-powered vision system that reads real-time hand gestures via webcam using MediaPipe and OpenCV, mapping detected landmarks to system control commands. Users may scroll, click, and switch windows through hand motion alone, with no physical input required. Integrated with PyAutoGUI for cross-platform compatibility." data-stack="OpenCV,MediaPipe,Python,Computer Vision,PyAutoGUI">
+  <div class="proj-thumb"><div class="proj-num">04</div><div class="proj-featured-badge">⭐ Club Project</div><div class="proj-thumb-placeholder">🖐️</div><img src="GSB.jpeg" alt="Gesture Bot" onerror="this.style.display='none'"></div>
+  <div class="proj-body"><div class="proj-header"><div class="proj-name">Gesture Control Bot</div><span class="proj-year">2026</span></div><p class="proj-desc">Real-time hand gesture recognition system enabling touchless application control via MediaPipe landmarks.</p><div class="proj-stack"><span>OpenCV</span><span>MediaPipe</span><span>Python</span></div><div class="proj-click-hint">Click for details</div><span class="proj-footer-label">📋 Club Repository</span></div>
+</div>
+
+      <div class="proj-card reveal reveal-delay-1" data-filter="CV" data-name="Sunglasses AR Filter" data-year="2025" data-category="Computer Vision" data-img="sunglasses.png" data-github="https://github.com/rashmisathish2025/robovitics_filter" data-desc="A real-time augmented reality filter employing OpenCV's Haar Cascade face and eye detection to overlay sunglasses on detected faces in a live webcam feed. Features smooth landmark tracking and automatic scaling relative to the detected face size — an early exploration of applied computer vision that remains a strong demonstration of foundational CV techniques." data-stack="OpenCV,Python,Haar Cascade,NumPy">
+  <div class="proj-thumb"><div class="proj-num">05</div><div class="proj-thumb-placeholder">🕶️</div><img src="sunglasses.jpeg" alt="Sunglasses Filter" onerror="this.style.display='none'"></div>
+  <div class="proj-body"><div class="proj-header"><div class="proj-name">Sunglasses AR Filter</div><span class="proj-year">2025</span></div><p class="proj-desc">Real-time AR face filter with Haar Cascade detection, landmark tracking, and automatic face-proportional scaling.</p><div class="proj-stack"><span>OpenCV</span><span>Python</span><span>Haar Cascade</span></div><div class="proj-click-hint">Click for details</div><a href="https://github.com/rashmisathish2025/robovitics_filter" target="_blank" class="proj-footer-btn">→ GitHub</a></div>
+</div>
+
+      <div class="proj-card featured reveal reveal-delay-2" data-filter="Robotics" data-name="Obstacle Avoidance Robot" data-year="2026" data-category="Robotics / Embedded Systems" data-img="robot.jpeg" data-github="" data-desc="A sensor-based autonomous ground robot developed with Arduino, incorporating ultrasonic and IR sensors for real-time obstacle detection and navigation in unknown environments. Built in collaboration with Robovitcs Club. Implements reactive navigation with sensor fusion for smooth, stable path planning." data-stack="Arduino,C++,Robotics,Ultrasonic Sensors,IR Sensors,IoT">
+  <div class="proj-thumb"><div class="proj-num">06</div><div class="proj-featured-badge">⭐ Club Project</div><div class="proj-thumb-placeholder">🦾</div><img src="robot.jpeg" alt="Autonomous Robot" onerror="this.style.display='none'"></div>
+  <div class="proj-body"><div class="proj-header"><div class="proj-name">Obstacle Avoidance Robot</div><span class="proj-year">2026</span></div><p class="proj-desc">Obstacle-avoiding autonomous robot with multi-sensor fusion — developed within Robovitcs Club.</p><div class="proj-stack"><span>Arduino</span><span>C++</span><span>IoT</span><span>Robotics</span></div><div class="proj-click-hint">Click for details</div><span class="proj-footer-label">⚙️ Hardware Project</span></div>
+</div>
+
+      <div class="proj-card reveal" data-filter="App" data-name="University Planner" data-year="2025" data-category="Desktop Application" data-img="university.jpeg" data-github="https://github.com/rashmisathish2025/codechef_universityplanner" data-desc="A Tkinter-based desktop academic management application designed for VIT students. Provides timetable management, assignment tracking, and a GPA calculator. All data is persisted locally using a SQLite database, ensuring continuity between sessions." data-stack="Python,Tkinter,SQLite,GUI Design">
+  <div class="proj-thumb"><div class="proj-num">07</div><div class="proj-thumb-placeholder">📚</div><img src="university.jpeg" alt="University Planner" onerror="this.style.display='none'"></div>
+  <div class="proj-body"><div class="proj-header"><div class="proj-name">University Planner</div><span class="proj-year">2025</span></div><p class="proj-desc">Desktop academic planner for VIT students — timetable management, GPA tracker, and assignment deadlines.</p><div class="proj-stack"><span>Python</span><span>Tkinter</span><span>SQLite</span></div><div class="proj-click-hint">Click for details</div><a href="https://github.com/rashmisathish2025/codechef_universityplanner" target="_blank" class="proj-footer-btn">→ GitHub</a></div>
+</div>
+
+     <div class="proj-card reveal reveal-delay-1" data-filter="App" data-name="Online Ticket Booking" data-year="2024" data-category="Desktop Application / CRUD" data-img="ticket.jpeg" data-github="" data-desc="A desktop ticket booking application developed with Tkinter and a MySQL backend for real-time seat management. Features an interactive seat selection interface, booking confirmation, cancellation workflow, and an administrative panel. Implements full CRUD operations with transaction integrity." data-stack="Python,Tkinter,MySQL,CRUD,SQL">
+  <div class="proj-thumb"><div class="proj-num">08</div><div class="proj-thumb-placeholder">🎫</div><img src="ticket.jpeg" alt="Ticket Booking" onerror="this.style.display='none'"></div>
+  <div class="proj-body"><div class="proj-header"><div class="proj-name">Ticket Booking System</div><span class="proj-year">2024</span></div><p class="proj-desc">Desktop booking application with MySQL backend, seat selection UI, and full CRUD with transaction integrity.</p><div class="proj-stack"><span>Python</span><span>Tkinter</span><span>MySQL</span></div><div class="proj-click-hint">Click for details</div><span class="proj-footer-label">📋 Private Repo</span></div>
+</div>
+
+      <div class="proj-card reveal reveal-delay-2" data-filter="App" data-name="Attendance Tracker" data-year="2025" data-category="Desktop Application / Data Analytics" data-img="" data-github="" data-desc="A desktop attendance management system developed in Python. Tracks attendance across multiple subjects, displays weekly analytical charts, and generates alerts when the VIT-mandated 75% attendance threshold is at risk. Addresses a common and practical academic challenge faced by university students." data-stack="Python,Tkinter,Pandas,NumPy,CSV">
+  <div class="proj-thumb"><div class="proj-num">09</div><div class="proj-thumb-placeholder">📊</div></div>
+  <div class="proj-body"><div class="proj-header"><div class="proj-name">Attendance Tracker</div><span class="proj-year">2025</span></div><p class="proj-desc">Attendance management system with threshold alerts, Pandas analytics, and per-subject breakdown.</p><div class="proj-stack"><span>Python</span><span>Pandas</span><span>NumPy</span><span>Tkinter</span></div><div class="proj-click-hint">Click for details</div><span class="proj-footer-label">📋 Private Repo</span></div>
+</div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true">
+  <div class="modal-blur-bg" id="modal-close-bg"></div>
+  <div class="modal-card">
+    <button class="modal-close" id="modal-close-btn">✕</button>
+    <img class="modal-img" id="modal-img" src="" alt="">
+    <div class="modal-body">
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-meta"><span class="modal-year" id="modal-year"></span><span class="modal-category" id="modal-category"></span></div>
+      <p class="modal-desc" id="modal-desc"></p>
+      <div class="modal-stack" id="modal-stack"></div>
+      <div class="modal-actions">
+        <a id="modal-github-btn" href="#" target="_blank" class="modal-btn modal-btn-primary">View on GitHub →</a>
+        <button class="modal-btn modal-btn-ghost" id="modal-close-btn2">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-div">
+
+<!-- ─── PROJECT TIMELINE — NAMES VISIBLE ─── -->
+<section id="proj-timeline">
+  <div class="ptl-header">
+    <p class="section-label">03.1 — Development Timeline</p>
+    <h2 class="section-title" style="margin-bottom:.4rem;">Built Over Time.</h2>
+    <p style="font-family:var(--font-mono);font-size:.72rem;color:var(--muted);letter-spacing:.05em;">Drag to explore · Hover for details · Click to open any project</p>
+  </div>
+
+  <div class="ptl-scroll-wrap" id="ptl-scroll">
+    <div class="ptl-track">
+
+      <!-- 2024 -->
+      <div class="ptl-year-div">
+        <div class="ptl-year-line" style="background:linear-gradient(to bottom,transparent,var(--green),transparent);"></div>
+        <div class="ptl-year-text" style="color:var(--green);">2024</div>
+        <div class="ptl-year-line" style="background:linear-gradient(to bottom,transparent,var(--green),transparent);"></div>
+      </div>
+
+      <div class="ptl-node" data-idx="7" style="--node-color:var(--gold);">
+        <div class="ptl-node-upper">
+          <div class="ptl-proj-name-label">Ticket Booking System</div>
+          <div class="ptl-date-label">DEC 2024</div>
+        </div>
+        <div class="ptl-stem"></div>
+        <div class="ptl-dot-wrap"><div class="ptl-dot"></div></div>
+      </div>
+
+      <!-- 2025 -->
+      <div class="ptl-year-div">
+        <div class="ptl-year-line" style="background:linear-gradient(to bottom,transparent,var(--cyan),transparent);"></div>
+        <div class="ptl-year-text" style="color:var(--cyan);">2025</div>
+        <div class="ptl-year-line" style="background:linear-gradient(to bottom,transparent,var(--cyan),transparent);"></div>
+      </div>
+
+      <div class="ptl-node" data-idx="4" style="--node-color:var(--cyan);">
+        <div class="ptl-node-upper">
+          <div class="ptl-proj-name-label">Sunglasses AR Filter</div>
+          <div class="ptl-date-label">MAY 2025</div>
+        </div>
+        <div class="ptl-stem"></div>
+        <div class="ptl-dot-wrap"><div class="ptl-dot"></div></div>
+      </div>
+
+      <div class="ptl-node" data-idx="6" style="--node-color:var(--pink);">
+        <div class="ptl-dot-wrap"><div class="ptl-dot"></div></div>
+        <div class="ptl-stem"></div>
+        <div class="ptl-node-lower">
+          <div class="ptl-date-label">AUG 2025</div>
+          <div class="ptl-proj-name-label">University Planner</div>
+        </div>
+      </div>
+
+      <div class="ptl-node" data-idx="8" style="--node-color:var(--green);">
+        <div class="ptl-node-upper">
+          <div class="ptl-proj-name-label">Attendance Tracker</div>
+          <div class="ptl-date-label">DEC 2025</div>
+        </div>
+        <div class="ptl-stem"></div>
+        <div class="ptl-dot-wrap"><div class="ptl-dot"></div></div>
+      </div>
+
+      <!-- 2026 -->
+      <div class="ptl-year-div">
+        <div class="ptl-year-line" style="background:linear-gradient(to bottom,transparent,var(--gold),transparent);"></div>
+        <div class="ptl-year-text" style="color:var(--gold);">2026</div>
+        <div class="ptl-year-line" style="background:linear-gradient(to bottom,transparent,var(--gold),transparent);"></div>
+      </div>
+
+      <div class="ptl-node" data-idx="0" style="--node-color:var(--pink);">
+        <div class="ptl-dot-wrap"><div class="ptl-dot"></div></div>
+        <div class="ptl-stem"></div>
+        <div class="ptl-node-lower">
+          <div class="ptl-date-label">JAN 2026</div>
+          <div class="ptl-proj-name-label">Anomalyze (Hackathon)</div>
+        </div>
+      </div>
+
+      <div class="ptl-node" data-idx="1" style="--node-color:var(--green);">
+        <div class="ptl-node-upper">
+          <div class="ptl-proj-name-label">L-Fractal System</div>
+          <div class="ptl-date-label">FEB 2026</div>
+        </div>
+        <div class="ptl-stem"></div>
+        <div class="ptl-dot-wrap"><div class="ptl-dot"></div></div>
+      </div>
+
+      <div class="ptl-node" data-idx="2" style="--node-color:var(--cyan);">
+        <div class="ptl-dot-wrap"><div class="ptl-dot"></div></div>
+        <div class="ptl-stem"></div>
+        <div class="ptl-node-lower">
+          <div class="ptl-date-label">FEB 2026</div>
+          <div class="ptl-proj-name-label">AI Chatbot</div>
+        </div>
+      </div>
+
+      <div class="ptl-node" data-idx="3" style="--node-color:var(--pink);">
+        <div class="ptl-node-upper">
+          <div class="ptl-proj-name-label">Gesture Control Bot</div>
+          <div class="ptl-date-label">MAR 2026</div>
+        </div>
+        <div class="ptl-stem"></div>
+        <div class="ptl-dot-wrap"><div class="ptl-dot"></div></div>
+      </div>
+
+      <div class="ptl-node" data-idx="5" style="--node-color:var(--gold);">
+        <div class="ptl-dot-wrap"><div class="ptl-dot"></div></div>
+        <div class="ptl-stem"></div>
+        <div class="ptl-node-lower">
+          <div class="ptl-date-label">APR 2026</div>
+          <div class="ptl-proj-name-label">Autonomous Robot</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ptl-drag-hint">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="var(--cyan)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Drag to scroll · Hover for details · Click any node to open the project
+  </div>
+</section>
+
+<hr class="section-div">
+
+<!-- ─── SKILLS ─── -->
+<section id="skills">
+  <div class="wrap">
+    <p class="section-label">04 — What I Work With</p>
+    <h2 class="section-title">Skills & Tools.</h2>
+    <div class="skills-layout">
+      <div>
+        <div class="skill-category">
+          <div class="skill-cat-title">Programming Languages</div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Python</span><span class="skill-pct">90%</span></div><div class="skill-bar"><div class="skill-fill fill-cyan" data-width="90"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">C / C++</span><span class="skill-pct">72%</span></div><div class="skill-bar"><div class="skill-fill fill-pink" data-width="72"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">HTML / CSS / JavaScript</span><span class="skill-pct">78%</span></div><div class="skill-bar"><div class="skill-fill fill-gold" data-width="78"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">SQL</span><span class="skill-pct">65%</span></div><div class="skill-bar"><div class="skill-fill fill-green" data-width="65"></div></div></div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-cat-title">ML / AI Libraries</div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">OpenCV</span><span class="skill-pct">82%</span></div><div class="skill-bar"><div class="skill-fill fill-cyan" data-width="82"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">scikit-learn</span><span class="skill-pct">72%</span></div><div class="skill-bar"><div class="skill-fill fill-pink" data-width="72"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">NumPy / Pandas</span><span class="skill-pct">80%</span></div><div class="skill-bar"><div class="skill-fill fill-gold" data-width="80"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Matplotlib / Seaborn</span><span class="skill-pct">76%</span></div><div class="skill-bar"><div class="skill-fill fill-green" data-width="76"></div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="skill-category">
+          <div class="skill-cat-title">Tools & Platforms</div>
+          <div class="tech-cloud">
+            <span class="tech-pill">Git & GitHub</span><span class="tech-pill">VS Code</span><span class="tech-pill">ESP32</span>
+            <span class="tech-pill">Arduino IDE</span><span class="tech-pill">Streamlit</span><span class="tech-pill">Google Colab</span>
+            <span class="tech-pill">Kaggle</span><span class="tech-pill">Linux</span><span class="tech-pill">MySQL</span>
+            <span class="tech-pill">MediaPipe</span><span class="tech-pill">Tkinter</span><span class="tech-pill">SQLite</span>
+          </div>
+        </div>
+        <div class="skill-category" style="margin-top:2rem;">
+          <div class="skill-cat-title">Computer Science Fundamentals</div>
+          <div class="tech-cloud">
+            <span class="tech-pill">Object-Oriented Programming</span><span class="tech-pill">Data Structures & Algorithms</span>
+            <span class="tech-pill">Database Management</span><span class="tech-pill">Computer Networks</span>
+            <span class="tech-pill">Operating Systems</span><span class="tech-pill">Recursion</span>
+            <span class="tech-pill">GUI Development</span><span class="tech-pill">CRUD Systems</span>
+          </div>
+        </div>
+        <div class="skill-category" style="margin-top:2rem;">
+          <div class="skill-cat-title">Applied AI / ML Domains</div>
+          <div class="tech-cloud">
+            <span class="tech-pill">Computer Vision</span><span class="tech-pill">Supervised Learning</span>
+            <span class="tech-pill">Unsupervised Learning</span><span class="tech-pill">Anomaly Detection</span>
+            <span class="tech-pill">Natural Language Processing</span><span class="tech-pill">Sensor Fusion</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-div">
+
+<!-- ─── LEARNINGS ─── -->
+<section id="certifications">
+  <div class="wrap">
+    <p class="section-label">05 — Always Learning</p>
+    <h2 class="section-title">How I've Grown.</h2>
+    <div class="learn-vtl">
+      <div class="lvtl-item lv-gold reveal"><div class="lvtl-dot" style="background:var(--gold);"></div><div class="lvtl-card"><div class="lvtl-icon">🐍</div><div><div class="lvtl-name">Python Programming</div><div class="lvtl-issuer">School-to-College Continuous Learning — Applied across all nine projects</div><span class="lvtl-date">Since 2023</span></div></div></div>
+      <div class="lvtl-item lv-cyan reveal reveal-delay-1"><div class="lvtl-dot" style="background:var(--cyan);"></div><div class="lvtl-card"><div class="lvtl-icon">🗃️</div><div><div class="lvtl-name">SQL for Data Science</div><div class="lvtl-issuer">CBSE Class X / XII — Database design and query fundamentals</div><span class="lvtl-date">2025</span></div></div></div>
+      <div class="lvtl-item lv-pink reveal reveal-delay-1"><div class="lvtl-dot" style="background:var(--pink);"></div><div class="lvtl-card"><div class="lvtl-icon">⚙️</div><div><div class="lvtl-name">C and C++ Programming</div><div class="lvtl-issuer">VIT Vellore — Low-level programming, memory management, and systems fundamentals</div><span class="lvtl-date">2026</span></div></div></div>
+      <div class="lvtl-item lv-cyan reveal reveal-delay-2"><div class="lvtl-dot" style="background:var(--cyan);"></div><div class="lvtl-card"><div class="lvtl-icon">👁️</div><div><div class="lvtl-name">Computer Vision with OpenCV</div><div class="lvtl-issuer">Robovitcs Club, VIT Vellore — Project-based, hands-on application</div><span class="lvtl-date">2026</span></div></div></div>
+      <div class="lvtl-item lv-green reveal reveal-delay-2"><div class="lvtl-dot" style="background:var(--green);"></div><div class="lvtl-card"><div class="lvtl-icon">🔍</div><div><div class="lvtl-name">Unsupervised ML and Anomaly Detection</div><div class="lvtl-issuer">Self-Directed Learning — Applied during the Anomalyze hackathon project</div><span class="lvtl-date">2026</span></div></div></div>
+      <div class="lvtl-item lv-pink reveal reveal-delay-1"><div class="lvtl-dot" style="background:var(--pink);"></div><div class="lvtl-card"><div class="lvtl-icon">🤖</div><div><div class="lvtl-name">Embedded Systems and Arduino</div><div class="lvtl-issuer">Robovitcs Club, VIT Vellore — Autonomous robot development project</div><span class="lvtl-date">2026</span></div></div></div>
+      <div class="lvtl-item lv-gold reveal reveal-delay-2"><div class="lvtl-dot" style="background:var(--gold);"></div><div class="lvtl-card"><div class="lvtl-icon">💬</div><div><div class="lvtl-name">NLP Fundamentals</div><div class="lvtl-issuer">Self-Directed Learning — Applied in the AI Chatbot project with intent detection</div><span class="lvtl-date">2026</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-div">
+
+<!-- ─── ACHIEVEMENTS ─── -->
+<section id="achievements">
+  <div class="wrap">
+    <p class="section-label">06 — Proud Moments</p>
+    <h2 class="section-title">Things I've Earned.</h2>
+    <div class="achieve-grid">
+      <div class="achieve-card ac-pink reveal"><span class="achieve-emoji">🎯</span><div class="achieve-title">100/100 in AI — Class X CBSE</div><div class="achieve-desc">Perfect score in Artificial Intelligence at the CBSE Class X Board Examination — the defining result that motivated the pursuit of Computer Science at undergraduate level.</div></div>
+      <div class="achieve-card ac-green reveal"><span class="achieve-emoji">🤖</span><div class="achieve-title">Robovitcs Club — Junior Core Selection</div><div class="achieve-desc">Competitively selected as a Junior Core Member (AI-ML Domain) of VIT's premier robotics club, contributing to hardware and AI projects alongside senior engineers.</div></div>
+      <div class="achieve-card ac-pink reveal reveal-delay-1"><span class="achieve-emoji">🏆</span><div class="achieve-title">Hackathon Completion — Anomalyze</div><div class="achieve-desc">Successfully developed and delivered a functional ML anomaly detection tool under 24-hour hackathon conditions — a rigorous test of technical competence and time management.</div></div>
+      <div class="achieve-card ac-gold reveal reveal-delay-2"><span class="achieve-emoji">⭐</span><div class="achieve-title">CGPA 8.1 / 10</div><div class="achieve-desc">Maintaining strong academic performance in a demanding CSC Core programme while completing nine independent projects and actively contributing to Robovitcs Club.</div></div>
+      <div class="achieve-card ac-cyan reveal reveal-delay-1"><span class="achieve-emoji">🛠️</span><div class="achieve-title">9 Projects Across 3 Domains</div><div class="achieve-desc">Independently built nine projects spanning Computer Vision, Machine Learning & NLP, and Desktop Applications — each one a deliberate step toward stronger, more well-rounded engineering skills.</div></div>
+  </div>
+</section>
+
+<hr class="section-div">
+
+<!-- ─── ROBOVITCS SPOTLIGHT ─── -->
+<section id="club">
+  <div class="wrap">
+    <p class="section-label">06.1 — Where I Belong</p>
+    <h2 class="section-title">Robovitcs Club.</h2>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;padding:0 3rem;">
+    <div class="club-banner reveal">
+      <div class="club-banner-inner">
+        <div>
+          <div class="club-logo-row">
+            <div class="club-bot-emoji">🤖</div>
+            <div><div class="club-name">ROBOVITCS</div><div class="club-sub-name">VIT Vellore · Premier Robotics Club</div></div>
+          </div>
+          <div class="club-role-badge"><div class="club-role-dot"></div>Junior Core Member — AI-ML Domain · 2026</div>
+          <p class="club-desc">Robovitcs is VIT Vellore's premier robotics club, where hardware engineering meets artificial intelligence. I was selected into the AI-ML domain through a competitive evaluation process in my first year — one of the most valuable learning environments available in the institution.</p>
+          <p class="club-desc" style="margin-top:0;">Within this domain, the focus is applied rather than theoretical: building systems that move, detect, respond, and adapt in real environments, not merely on simulated datasets.</p>
+          <div class="club-tags">
+            <span class="club-tag">Computer Vision</span><span class="club-tag">Arduino</span><span class="club-tag">Sensor Fusion</span>
+            <span class="club-tag">ROS (In Progress)</span><span class="club-tag">Embedded Systems</span><span class="club-tag">C++ on Hardware</span>
+            <span class="club-tag">MediaPipe</span><span class="club-tag">Applied AI-ML</span>
+          </div>
+        </div>
+        <div class="club-right-col">
+          <div class="club-stat-row">
+            <div class="club-stat-card"><div class="club-stat-n" style="color:var(--pink);">2</div><div class="club-stat-l">Club Projects</div></div>
+            <div class="club-stat-card"><div class="club-stat-n" style="color:var(--cyan);">1</div><div class="club-stat-l">Semester Active</div></div>
+            <div class="club-stat-card"><div class="club-stat-n" style="color:var(--gold);">∞</div><div class="club-stat-l">Skills Gained</div></div>
+          </div>
+          <div class="club-work-list">
+            <div class="club-work-item"><div class="club-work-icon">🖐️</div><div class="club-work-text"><strong>Gesture-Controlled Bot</strong>MediaPipe hand landmark detection integrated with OpenCV, mapping real-time gestures to robot control commands.</div></div>
+            <div class="club-work-item"><div class="club-work-icon">🦾</div><div class="club-work-text"><strong>Obstacle-Avoidance Robot</strong>Arduino-based autonomous robot with ultrasonic and IR sensor fusion for reactive path navigation.</div></div>
+            <div class="club-work-item"><div class="club-work-icon">📡</div><div class="club-work-text"><strong>Sensor Integration Research</strong>Investigating multi-sensor input fusion strategies to improve path planning algorithm reliability.</div></div>
+            <div class="club-work-item"><div class="club-work-icon">📖</div><div class="club-work-text"><strong>ROS & Deep Learning</strong>Currently studying the Robot Operating System and foundational deep learning as the next area of focus.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-div">
+
+<!-- ─── CURRENTLY LEARNING ─── -->
+<section id="learning">
+  <div class="wrap">
+    <p class="section-label">07 — What's Next</p>
+    <h2 class="section-title" style="margin-bottom:2.5rem;">Current Focus.</h2>
+    <div class="now-grid">
+      <div class="now-card nc-pink reveal"><span class="now-icon">🧠</span><div class="now-title">Deep Learning & Neural Networks</div><div class="now-why">Backpropagation, convolutional architectures, and gradient-based optimisation methods</div></div>
+      <div class="now-card nc-cyan reveal reveal-delay-1"><span class="now-icon">🔥</span><div class="now-title">TensorFlow / PyTorch</div><div class="now-why">Transitioning from scikit-learn to end-to-end model training pipelines</div></div>
+      <div class="now-card nc-gold reveal reveal-delay-2"><span class="now-icon">🤖</span><div class="now-title">Robot Operating System (ROS)</div><div class="now-why">Inter-robot communication, node architecture, and autonomous navigation frameworks</div></div>
+      <div class="now-card nc-green reveal"><span class="now-icon">⚡</span><div class="now-title">Transformer Architecture</div><div class="now-why">Self-attention mechanisms, positional encoding, and large-scale sequence modelling</div></div>
+      <div class="now-card nc-pink reveal reveal-delay-1"><span class="now-icon">🌐</span><div class="now-title">React & Modern Web Development</div><div class="now-why">Component-based architecture, state management, and modern front-end best practices</div></div>
+      <div class="now-card nc-cyan reveal reveal-delay-2"><span class="now-icon">⚔️</span><div class="now-title">Competitive Programming</div><div class="now-why">Data structures, algorithm design, and problem-solving through structured practice</div></div>
+    </div>
+    <div class="now-ticker-wrap">
+      <div class="ticker-track" id="ticker">
+        <span class="ticker-item"><span class="ticker-dot"></span>Deep Learning & Neural Networks</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>TensorFlow / PyTorch</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Robot Operating System (ROS)</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Transformer Architecture</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>React & Modern Web Development</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>LLM Fine-Tuning</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Advanced Computer Vision</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Competitive Programming</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Deep Learning & Neural Networks</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>TensorFlow / PyTorch</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Robot Operating System (ROS)</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Transformer Architecture</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>React & Modern Web Development</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>LLM Fine-Tuning</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Advanced Computer Vision</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Competitive Programming</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-div">
+
+<!-- ─── BEYOND THE SCREEN — NON-TECHNICAL ONLY ─── -->
+<section id="beyond">
+  <div class="wrap">
+    <p class="section-label">08 — The Other Side of Me</p>
+    <h2 class="section-title" style="margin-bottom:.5rem;">Life Beyond the Terminal.</h2>
+    <p style="color:var(--muted);font-size:.95rem;max-width:580px;margin-bottom:0;">A portrait of the disciplines, practices, and personal pursuits that exist independently of any technical domain — and that inform the character behind the work.</p>
+
+    <div class="bento-grid">
+
+      <!-- FINE ART — wide -->
+      <div class="bento-card bento-3 bento-gold reveal">
+        <div class="bento-bg-emoji">🎨</div>
+        <div class="bento-eyebrow" style="color:var(--gold);">Visual Arts</div>
+        <div class="bento-title">State-Level Artist</div>
+        <div class="bento-body">State-Level medalist at The Hindu Art Competition (Tamil Nadu), recognised among top entries across the state. 
+        Developed a strong creative voice through multiple art projects, with a focus on colour, composition, and fine detail. My artistic approach carries into design work, shaping visually intuitive and engaging outputs.</div>
+        <span class="bento-badge bento-badge-gold">🏅 State-Level Medal</span>
+      </div>
+
+      <!-- BHAGAVAT GITA — wide -->
+      <div class="bento-card bento-3 bento-violet reveal reveal-delay-1">
+        <div class="bento-bg-emoji">📖</div>
+        <div class="bento-eyebrow" style="color:var(--violet);">Scholarship & Discipline</div>
+        <div class="bento-title">Bhagavat Gita — 2nd Prize, Seven Consecutive Years</div>
+        <div class="bento-body">Placed second in the Bhagavat Gita competition consistently across seven years — a record requiring significant memorisation, textual comprehension, and sustained long-term commitment. A practice in the discipline and patience that underpins all serious intellectual endeavour.</div>
+        <div class="bento-streak">
+          <div class="streak-pip" style="background:var(--violet);"></div>
+          <div class="streak-pip" style="background:var(--violet);"></div>
+          <div class="streak-pip" style="background:var(--violet);"></div>
+          <div class="streak-pip" style="background:var(--violet);"></div>
+          <div class="streak-pip" style="background:var(--violet);"></div>
+          <div class="streak-pip" style="background:var(--violet);"></div>
+          <div class="streak-pip" style="background:var(--violet);"></div>
+          <span class="streak-label">Seven consecutive years</span>
+        </div>
+      </div>
+
+      <!-- VOCALIST -->
+      <div class="bento-card bento-2 bento-pink reveal">
+        <div class="bento-bg-emoji">🎵</div>
+        <div class="bento-eyebrow" style="color:var(--pink);">Music</div>
+        <div class="bento-title">Singer & Music Lover</div>
+        <div class="bento-body"> Trained in Tamil classical and contemporary vocal music, with a strong sense of rhythm and expression. Equally at home vibing to filmy songs, bringing energy, emotion, and a deep love for music into everything I do.</div>
+        <span class="bento-badge bento-badge-pink"> Classical Roots • Filmy Vibes </span>
+      </div>
+
+      <!-- DANCER -->
+    <div class="bento-card bento-2 bento-cyan reveal reveal-delay-1">
+      <div class="bento-bg-emoji">💃</div>
+      <div class="bento-eyebrow" style="color:var(--cyan);">Performing Arts</div>
+      <div class="bento-title">Dance Enthusiast</div>
+      <div class="bento-body">Deeply passionate about dance as a creative outlet, with a natural sense of rhythm and expression. Regularly explore different styles for enjoyment, building confidence, stage comfort, and expressive communication.</div>
+      <span class="bento-badge bento-badge-cyan">Passionate Performer</span>
+    </div>
+
+      <!-- SPEAKER -->
+      <div class="bento-card bento-2 bento-green reveal reveal-delay-2">
+        <div class="bento-bg-emoji">🎤</div>
+        <div class="bento-eyebrow" style="color:var(--green);">Communication</div>
+        <div class="bento-title">Public Speaker & Presenter</div>
+        <div class="bento-body">Repeatedly selected to represent projects and academic work before audiences at both school and college level. Demonstrated ability to communicate complex ideas clearly, hold a room's attention, and articulate a coherent point of view with confidence.</div>
+        <span class="bento-badge bento-badge-green">Repeatedly Selected — School & College</span>
+      </div>
+
+      <!-- MAKER — large, prominent -->
+      <div class="bento-card bento-4 bento-gold bento-row2 reveal">
+        <div class="bento-bg-emoji">🔧</div>
+        <div class="bento-eyebrow" style="color:var(--gold);">Making & Construction</div>
+        <div class="bento-title">A Lifelong Builder</div>
+        <div class="bento-body">An active member of the school's <strong style="color:var(--text);">Innovators Club</strong>, where participation was not passive — it was hands-on, practical, and results-driven. The impulse to identify a problem and immediately begin constructing a solution has been a consistent trait long before any formal engineering education began.</div>
+        <div class="bento-mini-grid">
+          <div class="bento-mini-item"><span>🪴 Terrarium Design</span>Independently designed and assembled living terrariums — closed ecological systems engineered entirely by hand, requiring knowledge of plant biology, drainage, and enclosure design.</div>
+          <div class="bento-mini-item"><span>🦾 Vacuum Arm Mechanism</span>Constructed a functioning vacuum-based arm mechanism — a self-built tong-like gripper that preceded any formal robotics instruction by years.</div>
+        </div>
+        <span class="bento-badge bento-badge-gold" style="margin-top:1rem;">Hands-On Maker — Since School</span>
+      </div>
+
+      <!-- PERSONAL PROFILE CARD -->
+      <div class="bento-card bento-2 reveal reveal-delay-1" style="border-top:1.5px solid rgba(255,255,255,0.1);">
+        <div class="bento-eyebrow" style="color:var(--muted);">Also</div>
+        <div class="bento-title" style="font-size:.92rem;">The other fun side of me</div>
+        <div class="bento-body">
+          ☕ Chai &gt; Coffee, always<br>
+          🌙 Midnight coder<br>
+          🍛 Chennai food loyalist<br>
+          📝 Obsessive note-taker<br>
+          🐛 Finds bugs no one else sees<br>
+          🌏 Wants to build for India<br>
+          🎧 Music = constant background process<br>
+          🎨 Turns ideas into visuals<br>
+          🚀 Loves building cool stuff from scratch<br>
+          📚 Learns fast, Googles faster<br>
+          🎯 Detail-oriented (sometimes too much)<br>
+          💡 Random ideas at the worst times<br>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-div">
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <div class="wrap">
+    <p class="section-label">09 — Contact</p>
+    <div class="contact-layout">
+      <div>
+        <div class="contact-tagline">
+          Open to<br><span>Collaboration.</span>
+        </div>
+        <p class="contact-sub">
+          Whether for academic collaboration, project partnership, club coordination, or professional enquiry — all correspondence is welcome. I am reachable via the channels listed below and endeavour to respond promptly.
+        </p>
+        <div class="social-links">
+          <a href="mailto:rashmisathish2812@gmail.com" class="social-link">
+            <span class="social-icon">📧</span><span>Email</span>
+            <span class="social-handle">rashmisathish2812@gmail.com</span>
+          </a>
+          <a href="https://www.linkedin.com/in/rashmi-sathish-7b19273a6" target="_blank" class="social-link">
+            <span class="social-icon">💼</span><span>LinkedIn</span>
+            <span class="social-handle">rashmi-sathish</span>
+          </a>
+          <a href="https://github.com/rashmisathish2025" target="_blank" class="social-link">
+            <span class="social-icon">🐙</span><span>GitHub</span>
+            <span class="social-handle">rashmi-sathish</span>
+          </a>
+          <a href="https://www.instagram.com/rashes2812/" target="_blank" class="social-link">
+            <span class="social-icon">📸</span><span>Instagram</span>
+            <span class="social-handle">@rashes2812</span>
+          </a>
+        </div>
+
+        <!-- FORMAL DUAL ADDRESS -->
+        <div style="margin-top:1.2rem;">
+          <div style="font-family:var(--font-mono);font-size:.64rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-bottom:.8rem;">Correspondence Addresses</div>
+          <div class="address-block">
+            <div class="address-card official">
+              <div class="address-card-icon">🏛️</div>
+              <div class="address-card-content">
+                <div class="address-card-type">Official Address</div>
+                <div class="address-card-name">VIT Vellore — On-Campus Residence</div>
+                <div class="address-card-text">
+                  Vellore Institute of Technology,<br>
+                  Tiruvalam Road, Katpadi,<br>
+                  Vellore — 632 014,<br>
+                  Tamil Nadu, India
+                </div>
+              </div>
+            </div>
+            <div class="address-card permanent">
+              <div class="address-card-icon">🏠</div>
+              <div class="address-card-content">
+                <div class="address-card-type">Permanent / Home Address</div>
+                <div class="address-card-name">Parental Residence — Chennai</div>
+                <div class="address-card-text">
+                  The Plutus Residence<br>
+                  LB Road,Thiruvanmiyur,<br>
+                  Chennai,<br>
+                  Tamil Nadu — 600 041,<br>
+                  India<br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="contact-form">
+          <div class="form-group"><label for="f-name">Full Name</label><input type="text" id="f-name" placeholder="Your full name"></div>
+          <div class="form-group"><label for="f-email">Email Address</label><input type="email" id="f-email" placeholder="your@email.com"></div>
+          <div class="form-group"><label for="f-subject">Subject</label><input type="text" id="f-subject" placeholder="Collaboration / Academic Enquiry / Other"></div>
+          <div class="form-group"><label for="f-msg">Message</label><textarea id="f-msg" placeholder="Please describe the purpose of your message..."></textarea></div>
+          <button class="form-submit" onclick="handleFormSubmit(event)">Submit Message →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="position:relative;z-index:2;border-top:1px solid var(--border2);padding:2rem 3rem;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+  <div style="font-family:var(--font-mono);font-size:.7rem;color:var(--muted);">Designed and developed by <strong style="color:var(--text);">Rashmi Sathish</strong> · 2026</div>
+  <div style="font-family:var(--font-mono);font-size:.62rem;color:var(--muted);">B.Tech Computer Science Core · VIT Vellore · Class of 2029</div>
+  <div style="font-family:var(--font-mono);font-size:.62rem;color:var(--muted);">rashmisathish2812@gmail.com</div>
+</footer>
+
+<script>
+/* CURSOR */
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+function animCursor(){rx+=(mx-rx)*.15;ry+=(my-ry)*.15;cursor.style.left=mx+'px';cursor.style.top=my+'px';ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animCursor);}
+animCursor();
+
+/* STARFIELD */
+const canvas=document.getElementById('starfield'),ctx=canvas.getContext('2d');
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+resizeCanvas();window.addEventListener('resize',resizeCanvas);
+const stars=[];
+for(let i=0;i<200;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1+.15,a:Math.random(),speed:Math.random()*.25+.04,drift:(Math.random()-.5)*.08});
+function drawStars(){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${s.a*.5})`;ctx.fill();s.y-=s.speed;s.x+=s.drift;s.a=.25+.5*Math.abs(Math.sin(Date.now()*.001+s.x));if(s.y<-2){s.y=canvas.height+2;s.x=Math.random()*canvas.width;}});requestAnimationFrame(drawStars);}
+drawStars();
+
+/* TYPEWRITER */
+const phrases=['B.Tech CSC Core — VIT Vellore 🎓','Computer Vision Engineer 👁️','Robotics & Embedded Systems 🤖','ML & AI Enthusiast 🧠','Building What Doesn\'t Exist Yet 🚀','Turning Ideas Into Working Code ⚡','Algorithms · Vision · Robotics 🔬'];
+let pi=0,ci=0,del=false;
+const tw=document.getElementById('typewriter');
+function type(){const w=phrases[pi];if(!del){tw.textContent=w.slice(0,ci++);if(ci>w.length){del=true;setTimeout(type,1800);return;}}else{tw.textContent=w.slice(0,ci--);if(ci<0){del=false;pi=(pi+1)%phrases.length;ci=0;setTimeout(type,400);return;}}setTimeout(type,del?55:85);}
+type();
+
+/* NAV */
+window.addEventListener('scroll',()=>document.getElementById('topnav').classList.toggle('scrolled',scrollY>60));
+
+/* COUNTERS */
+function animCounters(){document.querySelectorAll('.stat-n[data-target]').forEach(el=>{const t=parseFloat(el.dataset.target),isF=t%1!==0;let c=0;const s=t/60;const iv=setInterval(()=>{c+=s;if(c>=t){c=t;clearInterval(iv);}el.textContent=isF?c.toFixed(1):Math.floor(c);},18);});}
+
+/* INTERSECTION OBSERVER */
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.1});
+document.querySelectorAll('.reveal,.t-item,.proj-card,.achieve-card,.lvtl-item,.now-card,.bento-card').forEach(el=>io.observe(el));
+const skillsIO=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.skill-fill[data-width]').forEach(b=>setTimeout(()=>{b.style.width=b.dataset.width+'%';},100));skillsIO.unobserve(e.target);}}),{threshold:.2});
+const ss=document.getElementById('skills');if(ss)skillsIO.observe(ss);
+const statsIO=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){animCounters();statsIO.disconnect();}}),{threshold:.5});
+const se=document.querySelector('.stats-bar');if(se)statsIO.observe(se);
+
+/* FILTER */
+document.querySelectorAll('.filter-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const f=btn.dataset.filter;document.querySelectorAll('.proj-card').forEach(c=>{c.style.display=(f==='all'||c.dataset.filter===f)?'block':'none';});});});
+
+/* PROJECT MODAL */
+const backdrop=document.getElementById('modal-backdrop');
+const allCards=Array.from(document.querySelectorAll('.proj-card'));
+function openModal(card){document.getElementById('modal-title').textContent=card.dataset.name;document.getElementById('modal-year').textContent=card.dataset.year;document.getElementById('modal-category').textContent=card.dataset.category||'';document.getElementById('modal-desc').textContent=card.dataset.desc;const img=document.getElementById('modal-img');img.src=card.dataset.img||'';img.alt=card.dataset.name;img.classList.toggle('hidden',!card.dataset.img);img.onerror=()=>img.classList.add('hidden');document.getElementById('modal-stack').innerHTML=card.dataset.stack.split(',').map(s=>`<span>${s.trim()}</span>`).join('');const ghBtn=document.getElementById('modal-github-btn');if(card.dataset.github){ghBtn.href=card.dataset.github;ghBtn.style.display='inline-flex';}else{ghBtn.style.display='none';}backdrop.classList.add('open');document.body.classList.add('modal-open');}
+function closeModal(){backdrop.classList.remove('open');document.body.classList.remove('modal-open');}
+allCards.forEach(c=>c.addEventListener('click',()=>openModal(c)));
+document.getElementById('modal-close-btn').addEventListener('click',closeModal);
+document.getElementById('modal-close-btn2').addEventListener('click',closeModal);
+document.getElementById('modal-close-bg').addEventListener('click',closeModal);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+/* TIMELINE DRAG */
+const ptlScroll=document.getElementById('ptl-scroll');
+let isDn=false,stX,scL;
+ptlScroll.addEventListener('mousedown',e=>{isDn=true;stX=e.pageX-ptlScroll.offsetLeft;scL=ptlScroll.scrollLeft;});
+ptlScroll.addEventListener('mouseleave',()=>isDn=false);
+ptlScroll.addEventListener('mouseup',()=>isDn=false);
+ptlScroll.addEventListener('mousemove',e=>{if(!isDn)return;e.preventDefault();const x=e.pageX-ptlScroll.offsetLeft;ptlScroll.scrollLeft=scL-(x-stX)*1.5;});
+
+/* TIMELINE NODE CLICK */
+document.querySelectorAll('.ptl-node').forEach(node=>{node.addEventListener('click',()=>{const idx=parseInt(node.dataset.idx);if(!isNaN(idx)&&allCards[idx])openModal(allCards[idx]);});});
+
+/* CONTACT FORM */
+function handleFormSubmit(e){e.preventDefault();const name=document.getElementById('f-name').value;const email=document.getElementById('f-email').value;const sub=document.getElementById('f-subject').value||'Portfolio Enquiry';const msg=document.getElementById('f-msg').value;window.location.href=`mailto:rashmisathish2812@gmail.com?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent('From: '+name+' ('+email+')\n\n'+msg)}`;}
+</script>
+</body>
+</html>
